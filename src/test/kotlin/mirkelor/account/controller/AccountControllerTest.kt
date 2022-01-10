@@ -21,6 +21,7 @@ import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import java.math.BigDecimal
 import java.time.LocalDateTime
 
@@ -61,16 +62,16 @@ internal class AccountControllerTest {
 
         // Then
         resultActions.andExpect(MockMvcResultMatchers.status().isOk)
-            .andExpect(MockMvcResultMatchers.jsonPath("$.id").value("34"))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.balance").value(10))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.creationDate").value("2022-01-09T23:23:23"))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.customer.id").value("35"))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.customer.name").value("name"))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.customer.surname").value("surname"))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.transactions.[0].id").value("36"))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.transactions.[0].transactionType").value("INITIAL"))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.transactions.[0].amount").value(10))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.transactions.[0].transactionDate").value("2022-01-09T23:23:23"))
+            .andExpect(jsonPath("$.id").value("34"))
+            .andExpect(jsonPath("$.balance").value(10))
+            .andExpect(jsonPath("$.creationDate").value("2022-01-09T23:23:23"))
+            .andExpect(jsonPath("$.customer.id").value("35"))
+            .andExpect(jsonPath("$.customer.name").value("name"))
+            .andExpect(jsonPath("$.customer.surname").value("surname"))
+            .andExpect(jsonPath("$.transactions.[0].id").value("36"))
+            .andExpect(jsonPath("$.transactions.[0].transactionType").value("INITIAL"))
+            .andExpect(jsonPath("$.transactions.[0].amount").value(10))
+            .andExpect(jsonPath("$.transactions.[0].transactionDate").value("2022-01-09T23:23:23"))
         val argumentCaptor = argumentCaptor<CreateAccountRequest>()
         verify(accountService).createAccount(argumentCaptor.capture())
         assertThat(argumentCaptor.firstValue.customerId).isEqualTo("34")
