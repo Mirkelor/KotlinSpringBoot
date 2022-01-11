@@ -20,7 +20,7 @@ data class Account(
     val customer: Customer?,
 
     @OneToMany(mappedBy = "account", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
-    val transaction: Set<Transaction>? = HashSet()
+    val transaction: Set<Transaction>? = HashSet(),
 ) {
 
     constructor(customer: Customer, balance: BigDecimal, creationDate: LocalDateTime) : this(
@@ -28,6 +28,14 @@ data class Account(
         customer = customer,
         balance = balance,
         creationDate = creationDate
+    )
+
+    constructor() : this(
+        "",
+        customer = null,
+        balance = BigDecimal.ZERO,
+        creationDate = LocalDateTime.now(),
+        transaction = setOf()
     )
 
     override fun equals(other: Any?): Boolean {
